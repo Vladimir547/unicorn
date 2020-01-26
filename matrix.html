@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My homework</title>
+</head>
+    <body>
+        <script>
+            /*
+            Змейка
+            Написать функцию, которая будет принимать матрицу размером [n;n] и возвращать в виде простого массива, но чтоб элементы шли по часовой стрелке как бы змейкой ). Пример выполнения представлен ниже.
+            array = [[1,2,3],
+                    [4,5,6],
+                    [7,8,9]]
+            snail(array) #=> [1,2,3,6,9,8,7,4,5]
+
+            */
+            function matrixSnail(matrix){
+                let result =[];
+                while(matrix.length){
+                    //top
+                    result = result.concat(matrix.shift());
+                    for( let i= 0; i < matrix.length; i++){
+                        //right
+                        result.push(matrix[i].pop());
+                    }
+                    //bottom
+                    result = result.concat(matrix.pop().reverse());
+                    for(let j = matrix.length - 1; j>= 0; j--){
+                        //left
+                        result = result.concat(matrix[j].shift());
+                    }
+                }
+                return result;
+            }                 
+               /* console.log(matrixSnail([[0,9,8,7],
+                                        [6,5,4,3],
+                                        [2,1,0,0],
+                                        [0,2,1,0]]));*/
+
+
+            /*
+            Написать функцию, которая принимает две квадратные
+             матрицы одинаковой размерности и возвращает их произведение.
+            */                            
+            function multiplyMatrix(matrixA, matrixB){
+                let result = [];
+                for(let i = 0; i<matrixA.length; i++ ){
+                    result[i] =[];
+                    for(let j = 0; j<matrixA.length; j++){
+                        let newMatrix = 0;
+                        for(let a = 0; a<matrixA.length; a++){
+                            newMatrix +=matrixA[i][a] * matrixB[a][j];
+                            result[i][j] = newMatrix;
+                            //console.log(matrixB[a][j]);
+                        }
+                    }
+                }
+                //console.log(result);
+                return result;
+            }
+            let matrixA = [[5,4,1],
+                           [6,2,3],
+                           [3,1,7] ];
+            let matrixB = [[3,6,3],
+                           [2,4,3],
+                           [4,6,5] ];
+            //console.log(multiplyMatrix(matrixA, matrixB));
+        </script>
+    </body>
+
+</html>
