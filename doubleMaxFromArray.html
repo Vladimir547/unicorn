@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My homework</title>
+</head>
+    <body>
+        <script>
+            /*
+                    Максимум
+                    Даны два массива разной длины, необходимо найти
+                     повторяющийся в обоих массивах наибольший элемент. 
+
+            */
+                function maxRepeateNum(arr1, arr2){
+                    let result = [];
+                    let matchesArr1 = [];
+                    let matchesArr2 = [];
+                    let average = [];
+                    let match = [];
+                    for(let i = 0; i < arr1.length; i++){
+                        if(!matchesArr1.includes(arr1[i])){
+                            matchesArr1.push(arr1[i]);
+                            average.push(arr1[i]);
+                        } 
+                    }
+                    for(let i = 0; i < arr2.length; i++){
+                        if(!matchesArr2.includes(arr2[i])){
+                            matchesArr2.push(arr2[i]);
+                            average.push(arr2[i]);
+                        } 
+                    }
+                    for(let i = 0; i < average.length; i++){
+                        if(!match.includes(average[i])){
+                            match.push(average[i]);
+                        } else {
+                            result.push(average[i]);
+                        }
+                    }
+                    return Math.max.apply(null, result);
+                }
+                let arr1 = [10, 11, 11, 113, 13, 17];
+                let arr2 = [11, 13, 14, 23, 14, 18, 19, 30];
+                console.log(maxRepeateNum(arr1, arr2));
+        </script>
+    </body>
+    
+</html>

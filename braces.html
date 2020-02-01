@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My homework</title>
+</head>
+    <body>
+        <script>
+            /*
+                     Стек
+                    Написать функцию, которая принимает строку и валидирует вложенность данных в три вида скобок - (),[],{}. Примеры ниже
+                    {code, code, some data} - валидная.
+                    {[}] - невалидная
+                    {[]} - валидная
+                    ({}[]) - валидная
+                    [[({})]] - валидная
+                    При этом внутри скобок могут быть любые символы. Вопросы в комментарии.
+
+            */
+           'use strict';
+            function volidBraces(braces){
+                let result = [];
+                let matches = [];
+                for(let i = 0; i < braces.length; i++){
+                    matches[i] = braces[i];
+                    if(matches[i] === '('){
+                        result.unshift(')');
+                    } else if(matches[i] === '['){
+                        result.unshift(']');
+                    } else if(matches[i] === '{'){
+                        result.unshift('}');
+                    } else {
+                        if(result[0] === matches[i]){
+                            result.shift();
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+                if(result. length === 0){
+                    return true;
+                }
+            }
+            console.log(volidBraces('[[({})]]'));
+        </script>
+    </body>
+    
+</html>
