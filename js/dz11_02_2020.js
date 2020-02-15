@@ -9,16 +9,17 @@ cat.meow() === ‘Cat garfield is saying meow’; // true
 
 */
 'use strict';
-function Animal (name) {
-this.getName = function getName(){
-    return this.name = name;
-}
+function Animal(name) {
+    this.name = name;
+    this.getName = function getName() {
+        return this.name;
+    }
 };
-function Cat(){
-Animal.apply(this, arguments);
-this.meow = function meow(){
-    console.log (`Cat ${this.name} is saying meow`);
-}
+function Cat(name) {
+    Animal.call(this, name);
+    this.meow = function meow() {
+        console.log(`Cat ${this.name} is saying meow`);
+    }
 }
 //let animal = new Animal('bars', 'orange');
 Cat.prototype = Object.create(Animal.prototype);
@@ -38,33 +39,33 @@ cat.meow();
 менять его (геттер и сеттер). Реализовать метод healCorn2019(), чтоб при вызове у любого объекта User или Student 
 в консоли писало сообщение “Короновирус никогда не победит JS”(prototype).Реализовать через привязку контекста и прототип
 */
-function User(name, surname, yearEntering){
-this.name = name;
-this.surname = surname;
-this.year = yearEntering;
-this.getFullName = function (){
-    return `${name} ${surname}`;
-}
-this.setGender = function(gender){
-    this.gender = gender;
-}
-this.getGender = function(){
-    return this.gender;
-}
-}
-User.prototype.healCorn2019 = function healCorn2019(){
-console.log('Короновирус никогда не победит JS');
-};
-function Student(){
-User.apply(this, arguments);
-this.getCourse = function (){
-    let now = new Date().getFullYear();
-    if(now - this.year <= 5){
-        return now - this.year;
-    } else {
-        return `${this.name} ${this.surname} finished university`;
+function User(name, surname, yearEntering) {
+    this.name = name;
+    this.surname = surname;
+    this.year = yearEntering;
+    this.getFullName = function () {
+        return `${name} ${surname}`;
+    }
+    this.setGender = function (gender) {
+        this.gender = gender;
+    }
+    this.getGender = function () {
+        return this.gender;
     }
 }
+User.prototype.healCorn2019 = function healCorn2019() {
+    console.log('Короновирус никогда не победит JS');
+};
+function Student(name, surname, yearEntering) {
+    User.apply(this,[name, surname, yearEntering]);
+    this.getCourse = function () {
+        let now = new Date().getFullYear();
+        if (now - this.year <= 5) {
+            return now - this.year;
+        } else {
+            return `${this.name} ${this.surname} finished university`;
+        }
+    }
 }
 Student.prototype = Object.create(User.prototype);
 let student = new Student('Vova', 'Ilyushin', 2014);
