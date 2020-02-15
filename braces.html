@@ -32,16 +32,19 @@
                     } else {
                         if(result[0] === matches[i]){
                             result.shift();
-                        } else {
-                            return false;
-                        }
+                        }  
+						if (result[0] !== matches[i]){
+							return false;
+						 }
                     }
                 }
-                if(result. length === 0){
+                if(result.length === 0){
                     return true;
-                }
+                } else {
+					return false;
+				}
             }
-            console.log(volidBraces('({}[])'));
+            console.log(volidBraces('(((({{'));
         </script>
     </body>
     
