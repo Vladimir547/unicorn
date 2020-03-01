@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My homework</title>
+        <style>
+
+            .tool{
+                height: 3000px;
+                position: relative;
+            }
+            .tool-tip{
+                position: absolute;
+                padding: 10px 20px;
+                border: 1px solid #b3c9ce;
+                border-radius: 4px;
+                background: white;
+            }
+            .gallery{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-row-gap: 20px;
+            }
+            .gallery-item{
+                width: 300px;
+                height: 300px;
+            }
+            .show-img{
+                width: 50%;
+                height: 70%;
+                position: fixed;
+                transform: translate(-50%, -50%);
+                left: 50%;
+                top: 50%;
+                z-index: 10;
+                opacity: 1;
+            }
+            .overflow{
+                position: fixed;
+                width: 100%;
+                height: 100vh;
+                background: rgba( 0, 0, 0, .6);
+                top: 0px;
+                z-index: 1;
+            }
+            #genres{
+                margin: 40px;
+            }
+            .text{
+                border: 1px solid #000000;
+                width: 200px;
+                height: 100px;
+                display: block;
+            }
+            .textarea{
+                border: 3px solid green;
+                padding: 0px;
+                width: 200px;
+                height: 100px;
+                display: block;
+            }
+            .tableEdit td{
+                text-align: left;
+                vertical-align: top;
+                width: 100px;
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <ul class="hide-cild">
+            <li>one
+                <ul>
+                    <li>1.1
+                        <ul>
+                            <li>1.1.1</li>
+                        </ul>
+                    </li>
+                    <li>1.2</li>
+                </ul>
+            </li>
+            <li>two
+                <ul>
+                    <li>2.1</li>
+                    <li>2.2</li>
+                </ul>
+            </li>
+            <li>three
+                <ul>
+                    <li>3.1
+                        <ul>
+                            <li>3.1.1</li>
+                            <li>3.1.2</li>
+                        </ul>
+                    </li>
+                    <li>3.2</li>
+                </ul>
+            </li>
+        </ul>
+        <!-- SortTable-->
+        <table id="grid">
+            <thead>
+                <tr>
+                    <th data-type="number">Возраст</th>
+                    <th data-type="string">Имя</th>
+                </tr>
+            </thead>
+            <tbody id = "tbody">
+                <tr>
+                    <td>5</td>
+                    <td>Вася</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Петя</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Сигизмунд</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Алёша</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Саня</td>
+                </tr>
+                ...
+            </tbody>
+            </table>
+
+            <!-- ToolTip -->
+            <div class = 'tool'>
+                <button data-tooltip="эта подсказка длиннее, чем элемент">Короткая кнопка</button>
+                <button data-tooltip="HTML<br>подсказка">Ещё кнопка</button>
+            </div>
+            <div class="gallery">
+                <img class = 'gallery-item' src="img/hulk.jpeg" alt="">
+                <img class = 'gallery-item' src="img/jhon.png" alt="">
+                <img class = 'gallery-item' src="img/ledy.png" alt="">
+                <img class = 'gallery-item' src="img/sansa.png" alt="">
+                <img class = 'gallery-item' src="img/1336560663_wol08.jpg" alt="">
+                <img class = 'gallery-item' src="img/images.jpeg" alt="">
+                <img class = 'gallery-item' src="img/devid.png" alt="">
+                <img class = 'gallery-item' src="img/blog4.png" alt="">
+            </div>
+            <!--Game with select-->
+            <div>
+                <select id="genres">
+                    <option value="rock">Рок</option>
+                    <option value="blues" selected>Блюз</option>
+                </select>
+            </div>
+            <!--TextArea to Div-->
+            <div class="text">Text</div>
+
+            <!---->
+            <table class="tableEdit" border = '1'>
+                <tbody>
+                    <tr>
+                        <td><p> 5</p></td>
+                        <td>Вася</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Петя</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Сигизмунд</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Алёша</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Саня</td>
+                    </tr>
+                    ...
+                </tbody>
+                </table>
+        <script>
+            /*
+            Создайте дерево, которое по клику на заголовок скрывает-показывает потомков
+
+            Требования:
+            Использовать только один обработчик событий (применить делегирование)
+            Клик вне текста заголовка (на пустом месте) ничего делать не должен.
+            */
+            
+            let headParent = document.querySelector('.hide-cild');
+            let all = document.querySelectorAll('li');
+            for(let one of all){
+                let span = document.createElement('span');
+                one.prepend(span);
+                span.append(span.nextSibling);
+            }
+            headParent.onclick = function(event){
+                if (event.target.tagName != 'SPAN') {
+                    return;
+                }
+                let child = event.target.parentNode.querySelector('ul');
+                if (!child) return;
+                child.hidden = !child.hidden;
+            }
+
+            /*
+            SortTable
+
+            Сделать таблицу сортируемой: при клике на элемент <th> строки таблицы должны сортироваться по соответствующему столбцу.
+            Каждый элемент <th> имеет атрибут data-type:
+            <table id="grid">
+            <thead>
+                <tr>
+                <th data-type="number">Возраст</th>
+                <th data-type="string">Имя</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>5</td>
+                <td>Вася</td>
+                </tr>
+                <tr>
+                <td>10</td>
+                <td>Петя</td>
+                </tr>
+                ...
+            </tbody>
+            </table>
+
+            В примере выше первый столбец содержит числа, а второй – строки. Функция сотрировки должна это учитывать, ведь числа сортируются иначе, чем строки.
+            Сортировка должна поддерживать только типы "string" и "number".
+
+            */
+             let table = document.querySelector('#grid');
+             let tBody = document.querySelector('#tbody');
+             let callIndex = -1;
+             function sortTable (column, type, isSorting) {
+                let res = Array.from(table.rows).slice(1);
+                let arrSort = function(rowA, rowB) {
+                    let a = rowA.cells[column].innerHTML;
+                    let b = rowB.cells[column].innerHTML
+                    if( type == 'number'){
+                        return a - b;
+                    } else {
+                        if( a < b){
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                };
+                table.removeChild(tBody);
+                res.sort(arrSort);
+                if(isSorting){
+                    res.reverse();
+                }
+                for(let i = 0; i < res.length; i++){
+                    tBody.insertAdjacentElement('beforeend', res[i]);
+                }
+                table.insertAdjacentElement('beforeend', tBody);
+             }
+            table.addEventListener('click', (e) => { 
+                let elem = e.target.closest('th');
+                if(e.target.tagName != 'th'){
+                    return;
+                }
+                let column = elem.cellIndex;
+                let type = elem.getAttribute('data-type');
+                sortTable(column, type, callIndex == column);
+                callIndex = (callIndex == column) ? -1 : column;
+            });  
+
+            /*
+                ToolTip
+
+                Напишите JS-код, реализующий поведение «подсказка».
+                При наведении мыши на элемент с атрибутом data-tooltip, над ним должна показываться подсказка и скрываться при переходе на другой элемент.
+                Пример HTML с подсказками:
+                <button data-tooltip="эта подсказка длиннее, чем элемент">Короткая кнопка</button>
+                <button data-tooltip="HTML<br>подсказка">Ещё кнопка</button>
+
+                Результат в ифрейме с документом:
+
+                В этой задаче мы полагаем, что во всех элементах с атрибутом data-tooltip – только текст. То есть, в них нет вложенных тегов (пока).
+
+                Детали оформления:
+                Подсказка не должна вылезать за границы экрана, в том числе если страница частично прокручена, если нельзя показать сверху – показывать снизу элемента.
+                Текст подсказки брать из значения атрибута data-tooltip. Это может быть произвольный HTML.
+
+                Для решения вам понадобятся два события:
+                mouseover срабатывает, когда указатель мыши заходит на элемент.
+                mouseout срабатывает, когда указатель мыши уходит с элемента.
+                Примените делегирование событий: установите оба обработчика на элемент document, чтобы отслеживать «заход» и «уход» курсора на элементы с атрибутом data-tooltip и управлять подсказками с их же помощью.
+
+                После реализации поведения – люди, даже не знакомые с JavaScript смогут добавлять подсказки к элементам.
+                P.S. В один момент может быть показана только одна подсказка.
+
+            */
+            let tool = document.querySelector('.tool');
+            let createDiv;
+            tool.onmouseover = function (e){
+                let target = e.target.closest('button');
+                if(!target){
+                    return;
+                }
+                let htmlText = e.target.dataset.tooltip;
+                if (htmlText){
+                    createDiv = document.createElement('div');
+                    createDiv.className = 'tool-tip';
+                    createDiv.innerHTML = htmlText;
+                    tool.insertAdjacentElement('beforeend', createDiv);
+                }
+                let coords = target.getBoundingClientRect();
+                let left = coords.left + (target.offsetWidth - createDiv.offsetWidth) / 2;
+                if (left < 0) left = 0;
+                let top = -createDiv.offsetHeight - 4;
+                if (coords.top < createDiv.offsetHeight + 4) {
+                    top = target.offsetHeight + 4;
+                }
+
+                createDiv.style.left = left + 'px';
+                createDiv.style.top = top + 'px';
+            };
+            tool.onmouseout = function(){
+                if(createDiv){
+                    createDiv.remove();
+                    createDiv = null;
+                }
+            };
+            /*
+                Gallery with small image
+                Создайте галерею изображений, в которой основное изображение изменяется при клике на уменьшенный вариант.
+            */
+            let gallery = document.querySelector('.gallery');
+            let overflow = document.querySelector('.overflow');
+            let galleryShow = document.querySelector('.show-img');
+            let showGallery = function (e) {
+                let targetImg = e.target.closest('.gallery-item');
+                if(!targetImg){
+                    return;
+                }
+                overflow = document.createElement('div');
+                let show = targetImg.cloneNode(true);
+                show.className = 'show-img';
+                overflow.className = 'overflow';
+                gallery.insertAdjacentElement('beforeend', overflow);
+                overflow.insertAdjacentElement('beforeend', show);
+            };
+            let hideGallery = function(e) {
+                let targetOverflow = e.target.closest('.overflow');
+                if(!targetOverflow){
+                    return;
+                }
+                targetOverflow.remove(gallery);
+            };
+                gallery.addEventListener('click', showGallery);
+                gallery.addEventListener('click', hideGallery);
+
+            /*
+            Game with select
+
+            Имеется <select>:
+            <select id="genres">
+            <option value="rock">Рок</option>
+            <option value="blues" selected>Блюз</option>
+            </select>
+
+            Используя JavaScript:
+            Выведите значение и текст выбранного пункта.
+            Добавьте пункт: <option value="classic"
+            */
+
+            let select = document.querySelector('#genres');
+            let newOption = document.createElement('option');
+                    newOption.value = 'classic';
+                    newOption.innerHTML = 'классика';
+                    select.selected = true;
+                    select.insertAdjacentElement('beforeend', newOption);
+            let funcSelect = function(e){
+                let choose = e.target.closest('option');
+                alert(choose.innerHTML);
+            };
+            select.addEventListener('click', (e) => {
+                funcSelect(e);
+            });
+
+            /*
+            TextArea to Div
+
+            Создайте <div>, который превращается в <textarea>, если на него кликнуть.
+            <textarea> позволяет редактировать HTML в элементе <div>.
+            Когда пользователь нажимает Enter или переводит фокус, <textarea> превращается обратно в <div>, и его содержимое становится HTML-кодом в <div>.
+
+            */
+            let text = document.querySelector('.text');
+            let textArea;
+            text.onclick = editText;
+            function editText(){
+                textArea = document.createElement('textarea');
+                textArea.className = 'textarea';
+                textArea.value = text.innerHTML;
+                //console.log(textArea);
+                //text.insertAdjacentElement('beforeend', textArea);
+                text.replaceWith(textArea);
+                textArea.onkeydown = function(){
+                    if (event.key == 'Enter') {
+                        endEdit();
+                    }
+                }
+                textArea.onblur = function(){
+                    endEdit();
+                }
+            }
+            function endEdit(){
+                text.innerHTML = textArea.value;
+                textArea.replaceWith(text);
+            }
+            /*
+                Textarea to div in table
+                Сделайте ячейки таблицы редактируемыми по клику.
+                По клику – ячейка должна стать «редактируемой» (textarea появляется внутри), мы можем изменять HTML. Изменение размера ячейки должно быть отключено.
+                Кнопки OK и ОТМЕНА появляются ниже ячейки и, соответственно, завершают/отменяют редактирование.
+                Только одну ячейку можно редактировать за один раз. Пока <td> в «режиме редактирования», клики по другим ячейкам игнорируются.
+                Таблица может иметь множество ячеек. Используйте делегирование событий.
+            */
+            let tableEdit = document.querySelector('.tableEdit');
+            let editingTd;
+            tableEdit.onclick = function(e){
+                let targetEdit = e.target.closest('td, .edit-ok , .edit-cancel');
+                if(targetEdit.nodeName == 'TD'){
+                    if(editingTd){
+                        return;
+                    }
+                    makeEdit(targetEdit);
+                } else if(targetEdit.className == 'edit-ok'){
+                    finishEdit(editingTd.elem, true);
+                }
+                else if (targetEdit.className == 'edit-cancel'){
+                    finishEdit(editingTd.elem, false);
+                }
+            }
+            function makeEdit(td){
+                editingTd = {
+                    elem: td,
+                    data: td.innerHTML
+                };
+                let textArea = document.createElement('textarea');
+                textArea.style.width = td.clientWidth + 'px';
+                textArea.style.height = td.clientHeight + 'px';
+                textArea.value = td.innerHTML;
+                td.innerHTML = '';
+                td.insertAdjacentElement('beforeend', textArea);
+                td.insertAdjacentHTML('beforeend',
+                    '<div class="edit-controls"><button class="edit-ok">OK</button><button class="edit-cancel">CANCEL</button></div>'
+                );
+            }
+            function finishEdit(td, isOk){
+                if (isOk) {
+                    td.innerHTML = td.firstChild.value;
+                } else {
+                    td.innerHTML = editingTd.data;
+                }
+                editingTd = null;
+                //console.log('loh');
+            }
+            /*
+            PreventDefault
+
+            Почему в коде ниже return false не работает?
+            <script>
+            function handler() { -передать в скобки ивент
+                alert( "..." );
+                return false; --- а тут eevent.preventDefault();
+            }
+            </scrip
+            <a href="http://w3.org" onclick="handler()">браузер откроет w3.org</a> - тут тоже можно как то пофиксить
+
+            Браузер переходит по указанной ссылке, но нам этого не нужно.
+
+            Как поправить?
+
+            */
+
+        </script>
+    </body>
+</html>
