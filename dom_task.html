@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>DOM</title>
+    <style>
+        #field {
+            width: 500px;
+            height: 200px;
+            background-color: #00FF00;
+            position: relative;
+            cursor: pointer;
+        }
+
+        #ball {
+            position: absolute;
+            transition: ease .5s;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: black;
+        }
+
+        #gallery {
+            text-align: center;
+            height: 100vh;
+        }
+
+        .img {
+            position: relative;
+        }
+
+        img {
+            width: 100%;
+            height: calc(100vh - 30px);
+            position: absolute;
+            left: 0px;
+            top: 30px;
+            opacity: 0;
+            transition: ease 3s;
+        }
+
+        img.showed {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <table class='table'>
+        <tr>
+            <td>ыфва</td>
+            <td>ыва</td>
+            <td>sdfsafdg</td>
+            <td>sadfasdf</td>
+            <td>sdf</td>
+        </tr>
+        <tr>
+            <td>sdf</td>
+            <td>fgbh</td>
+            <td>dfgd</td>
+            <td>dfgd</td>
+            <td>dfg</td>
+        </tr>
+        <tr>
+            <td>sdf</td>
+            <td>as</td>
+            <td>fhjfg</td>
+            <td> fdgb</td>
+            <td>234</td>
+        </tr>
+        <tr>
+            <td>sdf4</td>
+            <td>2hfj</td>
+            <td>8794</td>
+            <td>13</td>
+            <td>45</td>
+        </tr>
+        <tr>
+            <td>1:5</td>
+            <td>2:5</td>
+            <td>3:5</td>
+            <td>4:5</td>
+            <td>5:5</td>
+        </tr>
+    </table>
+    <div id="text">
+        sdgfdfg
+    </div>
+    <button id="hid">hide</button>
+    <div id="field">
+        <div id="ball"></div>
+    </div>
+    <div id="gallery">
+        <div class='img'>
+            <img src='img/hulk.jpeg' class="showed">
+            <img src='img/images.jpeg'>
+            <img src='img/1336560663_wol08.jpg'>
+        </div>
+        <div class='btn'>
+            <input type="button" value="left" class="left">
+            <input type="button" value="right" class="right">
+        </div>
+    </div>
+    <script>
+        /*
+            Дана страница:
+            <html>
+            <body>
+            <div>Пользователи:</div>
+            <ul>
+                <li>Джон</li>
+                <li>Пит</li>
+            </ul>
+            </body>
+            </html>
+
+            Как получить элементы :
+            Напишите код, который получит элемент <div>?
+            Напишите код, который получит <ul>?
+            Напишите код, который получит второй <li> (с именем Пит)?
+        */
+        /*document.body.firstElementChild.style.color = 'red';
+        document.body.children[1].style.color = 'green';
+        document.body.children[1].firstElementChild.style.fontSize = '40px';
+        document.body.children[1].lastElementChild.style.fontSize = '10px';*/
+        /*
+        Если elem – произвольный узел DOM-элемента…
+    Правда, что elem.lastChild.nextSibling всегда равен null? -да,правда
+    Правда, что elem.children[0].previousSibling всегда равен null ? - вроде нет, но не доконца понимаю почему
+*/
+
+        /*
+                Напишите код, который выделит красным цветом все ячейки в таблице по диагонали.
+
+                Вам нужно получить из таблицы <table> все диагональные <td> и выделить их, используя код:
+                //  в переменной td находится DOM-элемент для тега <td>
+                td.style.backgroundColor = 'red';
+
+                Должно получиться так:
+
+        */
+        let table = document.querySelector('.table');
+        for (let i = 0; i < table.rows.length; i++) {
+            table.rows[i].cells[i].style.border = '1px solid green';
+        }
+        /*
+        Добавьте JavaScript к кнопке button, чтобы при нажатии элемент <div id="text"> исчезал.
+        */
+        let text = document.querySelector('#text');
+        let btn = document.querySelector('#hid');
+        btn.onclick = function () {
+            text.style.display = 'none';
+            hid.style.display = 'none';
+        }
+        /*
+            Создайте кнопку, которая будет скрывать себя по нажатию.
+
+            смотреть предыдущее задание!!!
+        */
+
+        /*
+            В переменной button находится кнопка. Изначально на ней нет обработчиков.
+
+            Который из обработчиков запустится? Что будет выведено при клике после выполнения кода?
+
+            button.addEventListener("click", () => alert("1"));
+            button.removeEventListener("click", () => alert("1"));
+            button.onclick = () => alert(2);
+
+            ЗАпустится первый и третий обработчик
+        */
+        /*
+         Создайте поле, где мяч перемещается туда, куда был клик
+ 
+             Требования:
+             Центр мяча должен совпадать с местом нажатия мыши (если это возможно без пересечения краёв поля);
+             CSS-анимация желательна, но не обязательна;
+             Мяч ни в коем случае не должен пересекать границы поля;
+             При прокрутке страницы ничего не должно ломаться;
+ 
+             Заметки:
+             Код должен уметь работать с различными размерами мяча и поля, не привязываться к каким-либо фиксированным значениям.
+             Используйте свойства event.clientX/event.clientY для определения координат мыши при клике.
+ 
+        */
+        let ball = document.querySelector('#ball')
+        let field = document.querySelector('#field');
+        /*ball.style.left = Math.round(field.clientWidth / 2 - ball.offsetWidth / 2) + 'px'
+        ball.style.top = Math.round(field.clientHeight / 2 - ball.offsetHeight / 2) + 'px'*/
+
+        field.onclick = function () {
+            let fieldCoords = field.getBoundingClientRect();
+            let ballCoords = {
+                top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
+                left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
+            };
+            if (ballCoords.top < 0) ballCoords.top = 0;
+            if (ballCoords.left < 0) ballCoords.left = 0;
+            if (ballCoords.left + ball.clientWidth > field.clientWidth) {
+                ballCoords.left = field.clientWidth - ball.clientWidth;
+            }
+            if (ballCoords.top + ball.clientHeight > field.clientHeight) {
+                ballCoords.top = field.clientHeight - ball.clientHeight;
+            }
+            ball.style.left = ballCoords.left + 'px';
+            ball.style.top = ballCoords.top + 'px';
+        }
+        /*
+            Создать меню, которое по нажатию открывается либо закрывается
+
+
+            в макете я такое делал
+        */
+        /*
+             Задача
+ 
+ Создайте «Карусель» –- ленту изображений, которую можно листать влево-вправо нажатием на стрелочки.
+ 
+        */
+        var btn_left = document.querySelector('.left');
+        var btn_right = document.querySelector('.right');
+        var image = document.querySelectorAll('#gallery .img img');
+        var a = 0;
+
+        //console.log(image.length);
+        btn_left.onclick = function () {
+            image[a].className = '';
+            a = a - 1;
+            if (a < 0) {
+                a = image.length - 1;
+            }
+            image[a].className = 'showed';
+        }
+        btn_right.onclick = function () {
+            image[a].className = '';
+            a++;
+            if (a >= image.length) {
+                a = 0;
+            }
+            image[a].className = 'showed';
+        }
+    </script>
+</body>
+
+</html>
